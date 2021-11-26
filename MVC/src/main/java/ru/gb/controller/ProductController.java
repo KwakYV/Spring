@@ -85,9 +85,7 @@ public class ProductController {
         model.addAttribute("product", product);
         return "create";
     }
-    /**
-     *
-     */
+
 
 //    @RequestMapping
 //    public String printMessage(Model model){
