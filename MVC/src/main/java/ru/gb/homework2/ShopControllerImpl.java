@@ -1,4 +1,4 @@
-package homework2;
+package ru.gb.homework2;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Lookup;
