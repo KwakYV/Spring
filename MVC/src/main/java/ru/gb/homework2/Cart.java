@@ -10,10 +10,16 @@ import java.util.function.Consumer;
 @Component
 @Scope("prototype")
 public class Cart implements Consumer<Product> {
-    private final Map<Integer, Product> products = new HashMap<>(); // дз
+    private final Map<Integer, Pair> products = new HashMap<>(); // дз
 
     public void add(Product product) {
-        products.put(product.getId(), product);
+        if (products.containsKey(product.getId())){
+            Pair pair = products.get(product.getId());
+            pair.setCount(pair.getCount() + 1);
+        }else {
+            products.put(product.getId(), new Pair(product, 1));
+        }
+
     }
 
     public void deleteByProductId(Integer id) {

@@ -3,10 +3,7 @@ package ru.gb.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import ru.gb.entity.Product;
 import ru.gb.service.ProductService;
 
@@ -20,7 +17,7 @@ public class ProductController {
     /**
      * Метод создания формы
      */
-    @RequestMapping(value = "/create", method = RequestMethod.GET)
+    @GetMapping(value = "/create")
     public String showSimpleForm(Model model){
         Product product = new Product();
         model.addAttribute("product", product);
@@ -30,7 +27,7 @@ public class ProductController {
     /**
      *  Метод вывода одного сообщения на экран
      */
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @GetMapping(value = "/{id}")
     public String getMessageById(Model model,
                                  @PathVariable Integer id,
                                  @RequestParam(name = "random", defaultValue = "false", required = false) Boolean isRandom) {
@@ -47,7 +44,7 @@ public class ProductController {
     /**
      * Сохранение продукта в базе
      */
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @PostMapping(value = "/create")
     public String processForm(Product product){
         if (product.getId() == null){
             productService.save(product);
@@ -61,7 +58,7 @@ public class ProductController {
     /**
      * Список сообщений
      */
-    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    @GetMapping(value = "/all")
     public String getAll(Model model){
         model.addAttribute("products", productService.findAll());
         return "product-list";
@@ -70,7 +67,7 @@ public class ProductController {
     /**
      * Удаление по Id
      */
-    @RequestMapping(value = "/delete", method = RequestMethod.GET)
+    @GetMapping(value = "/delete")
     public String deleteById(@RequestParam Integer id){
         productService.deleteById(id);
         return "redirect:/product/all";
@@ -79,7 +76,7 @@ public class ProductController {
     /**
      * Редактирование по Id
      */
-    @RequestMapping(value = "/edit", method = RequestMethod.GET)
+    @GetMapping(value = "/edit")
     public String editById(Model model, @RequestParam Integer id){
         Product product = productService.findById(id);
         model.addAttribute("product", product);
