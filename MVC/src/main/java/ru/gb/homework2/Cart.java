@@ -19,6 +19,7 @@ public class Cart implements Consumer<Product> {
         }else {
             products.put(product.getId(), new Pair(product, 1));
         }
+
     }
 
     public void deleteByProductId(Integer id) {
