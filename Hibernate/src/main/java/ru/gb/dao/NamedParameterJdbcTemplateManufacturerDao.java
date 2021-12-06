@@ -88,7 +88,7 @@ public class NamedParameterJdbcTemplateManufacturerDao implements ManufacturerDa
                         .id(productId)
                         .title(rs.getString("title"))
                         .cost(rs.getBigDecimal("cost"))
-                        .manufactureDate(rs.getDate("manufacture_date").toLocalDate())
+//                        .manufactureDate(rs.getDate("manufacture_date").toLocalDate())
                         .build();
                 manufacturer.addProduct(product);
             }
