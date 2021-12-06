@@ -40,6 +40,11 @@ public class HomeWork6 {
             order.getProducts().stream().forEach(product -> {
                 System.out.println(product.getTitle());
             });
+            Double sum = order.getProducts().stream().map(product -> product.getCost().doubleValue()).reduce(0.0, (first, second) -> {
+                double v = first + second;
+                return v;
+            });
+            System.out.println("---------Total cost of order - " + sum);
         }
     }
 }
