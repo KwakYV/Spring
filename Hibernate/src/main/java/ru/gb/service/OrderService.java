@@ -2,12 +2,13 @@ package ru.gb.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import ru.gb.dao.OrderDao;
 import ru.gb.entity.Order;
 
 import java.util.List;
 
-@Repository
+@Service
 @AllArgsConstructor
 public class OrderService {
 
