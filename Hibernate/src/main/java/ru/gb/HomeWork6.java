@@ -1,6 +1,7 @@
 package ru.gb;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.data.domain.Sort;
 import ru.gb.config.JpaConfig;
 import ru.gb.dao.CustomerDao;
 import ru.gb.dao.OrderDao;
@@ -13,7 +14,9 @@ import ru.gb.service.OrderService;
 import ru.gb.service.ProductService;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class HomeWork6 {
     public static void main(String[] args) {
@@ -22,6 +25,7 @@ public class HomeWork6 {
         ProductService productService = context.getBean(ProductService.class);
         CustomerService customerService = context.getBean(CustomerService.class);
 
+        System.out.println(productService.findById(1L).getTitle());
         Customer customer = customerService.getCustomerById(5L);
         List<Product> listOfProduct = (List<Product>) productService.findAll();
         Long orderNumber = orderService.maxNumber();
@@ -34,17 +38,22 @@ public class HomeWork6 {
         }
 
         customer = customerService.getCustomerById(5L);
-        System.out.println("********** Customer - " + customer.getName() + " ****************");
+        Map<Long, List<Product>> map = new HashMap<>();
         for (Order order : customer.getOrders()) {
-            System.out.println("===================== Order number - " + order.getNumber());
-            order.getProducts().stream().forEach(product -> {
-                System.out.println(product.getTitle());
+            map.put(order.getNumber(), productService.findAllByOrderDesc(order));
+        }
+        System.out.println("********** Customer - " + customer.getName() + " ****************");
+        for (Long aLong : map.keySet()) {
+            System.out.println("===================== Order number - " + aLong);
+            map.get(aLong).stream().forEach(product -> {
+                System.out.println(String.format("%s === %s", product.getTitle(), product.getCost().toString()));
             });
-            Double sum = order.getProducts().stream().map(product -> product.getCost().doubleValue()).reduce(0.0, (first, second) -> {
+            Double sum = map.get(aLong).stream().map(product -> product.getCost().doubleValue()).reduce(0.0, (first, second) -> {
                 double v = first + second;
                 return v;
             });
             System.out.println("---------Total cost of order - " + sum);
+
         }
     }
 }

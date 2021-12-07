@@ -14,6 +14,6 @@ public class CustomerService {
     private final CustomerDao customerDao;
 
     public Customer getCustomerById(Long id) {
-        return customerDao.getCustomerById(id);
+        return customerDao.findById(id).orElse(null);
     }
 }

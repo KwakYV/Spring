@@ -26,7 +26,7 @@ public class Order {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany()
     @JoinTable(
             name = "hw6.ln_order_product",
             joinColumns = @JoinColumn(name = "order_id"),

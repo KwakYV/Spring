@@ -3,7 +3,6 @@ package ru.gb;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import ru.gb.config.HibernateConfig;
 import ru.gb.dao.ManufacturerDao;
-import ru.gb.dao.OldJdbcManufacturerDao;
 import ru.gb.entity.Manufacturer;
 
 public class ShopApp {
