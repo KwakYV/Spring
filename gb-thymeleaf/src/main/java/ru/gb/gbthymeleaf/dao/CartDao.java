@@ -7,4 +7,5 @@ import ru.gb.gbthymeleaf.entity.Cart;
 public interface CartDao extends JpaRepository<Cart, Long> {
     @Query("select max(c.number) from Cart c")
     public Long maxNumber();
+    public Cart findByNumber(Long number);
 }

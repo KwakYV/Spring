@@ -50,7 +50,7 @@ public class ProductController {
         return "redirect:/product/all";
     }
 
-    @GetMapping("/cart")
+    @GetMapping("/addToCart")
     public String addToCart(@RequestParam(name = "id", required = false) Long id){
         Product product = productService.findById(id);
         List<Product> products = new ArrayList<>();
@@ -61,6 +61,7 @@ public class ProductController {
                     .products(products)
                     .build();
         } else {
+            cart = cartService.findById(cart.getId());
             cart.getProducts().add(product);
         }
         cart = cartService.saveOrUpdate(cart);
