@@ -29,4 +29,11 @@ public class CartService {
     public Long maxNumber(){
         return (cartDao.maxNumber() == null) ? 0 : cartDao.maxNumber();
     }
+    public Cart findByCartNumber(Long number){
+        return cartDao.findByNumber(number);
+    }
+
+    public Cart findById(Long id){
+        return cartDao.findById(id).orElse(null);
+    }
 }
