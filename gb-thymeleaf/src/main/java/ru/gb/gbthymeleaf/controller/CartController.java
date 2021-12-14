@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ru.gb.gbthymeleaf.entity.Cart;
 import ru.gb.gbthymeleaf.service.CartService;
 
-import java.util.Optional;
-
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/cart")
@@ -22,6 +20,7 @@ public class CartController {
         model.addAttribute("cart", cartService.findByCartNumber(cartService.maxNumber()));
         return "cart";
     }
+
 
     @GetMapping("/delete")
     public String deleteById(@RequestParam(name = "id") Long id, @RequestParam(name = "productId") Long productId) {
