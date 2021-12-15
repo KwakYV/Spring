@@ -20,7 +20,7 @@ public class CartService {
             if (cartOptional.isPresent()){
                 Cart cartFromDb = cartOptional.get();
                 cartFromDb.setProducts(cart.getProducts());
-                return cartDao.save(cartFromDb);
+                cartDao.save(cartFromDb);
             }
         }
         return cartDao.save(cart);
