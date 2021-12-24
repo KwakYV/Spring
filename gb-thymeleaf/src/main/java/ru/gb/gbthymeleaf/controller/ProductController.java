@@ -3,10 +3,7 @@ package ru.gb.gbthymeleaf.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import ru.gb.gbthymeleaf.entity.Cart;
 import ru.gb.gbthymeleaf.entity.Product;
 import ru.gb.gbthymeleaf.service.CartService;
@@ -73,5 +70,17 @@ public class ProductController {
     public String deleteById(@RequestParam(name = "id") Long id) {
         productService.deleteById(id);
         return "redirect:/product/all";
+    }
+
+    @GetMapping("/{productId}")
+    public String info(Model model, @PathVariable("productId") Long id){
+        Product product;
+        if (id != null) {
+            product = productService.findById(id);
+        } else {
+            return "redirect:/product/all";
+        }
+        model.addAttribute("product", product);
+        return "product-info";
     }
 }
