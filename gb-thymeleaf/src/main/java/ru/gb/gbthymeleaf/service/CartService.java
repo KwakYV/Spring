@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import ru.gb.gbthymeleaf.dao.CartDao;
 import ru.gb.gbthymeleaf.entity.Cart;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
@@ -30,7 +31,9 @@ public class CartService {
         return (cartDao.maxNumber() == null) ? 0 : cartDao.maxNumber();
     }
     public Cart findByCartNumber(Long number){
-        return cartDao.findByNumber(number);
+        return cartDao.findByNumber(number).orElse(Cart.builder()
+                        .products(new ArrayList<>())
+                        .build());
     }
 
     public Cart findById(Long id){
