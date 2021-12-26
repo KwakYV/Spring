@@ -24,8 +24,8 @@
                 <th scope="col">Цена</th>
                 <th scope="col" sec:authorize="hasRole('ADMIN')">Редактировать</th>
                 <th scope="col" sec:authorize="hasRole('ADMIN')">Удалить</th>
-                <th scope="col" sec:authorize="hasRole('USER')">Просмотреть</th>
-                <th scope="col" sec:authorize="hasRole('USER')">Добавить в корзину</th>
+                <th scope="col">Просмотреть</th>
+                <th scope="col">Добавить в корзину</th>
             </tr>
             </thead>
             <tbody>
@@ -41,6 +41,15 @@
                     </td>
                     <td>
                         <a type="button" class="btn btn-primary" th:href="@{'/product/'+${product.id}}">Просмотр</a>
+                    </td>
+                </div>
+
+                <div sec:authorize="isAnonymous()">
+                    <td>
+                        <a type="button" class="btn btn-primary" th:href="@{/auth}">Добавить в корзину</a>
+                    </td>
+                    <td>
+                        <a type="button" class="btn btn-primary" th:href="@{/auth}">Просмотр</a>
                     </td>
                 </div>
 
