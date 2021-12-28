@@ -9,10 +9,12 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
+import ru.gb.gbrest.dto.OrderDto;
 import ru.gb.gbrest.dto.ProductDto;
 import ru.gb.gbrest.dto.ProductManufacturerDto;
 import ru.gb.gbrest.entity.Product;
 import ru.gb.gbrest.service.ProductService;
+import ru.gb.gbrest.service.feign.OrderDtoApi;
 
 import java.net.URI;
 import java.util.ArrayList;
@@ -25,6 +27,8 @@ import java.util.stream.Collectors;
 public class ProductController {
 
     private final ProductService productService;
+    private final OrderDtoApi orderDtoApi;
+    private OrderDto orderDto;
 
     @GetMapping
     public List<ProductDto> getProductList() {
@@ -67,6 +71,25 @@ public class ProductController {
     @GetMapping("/info")
     public List<ProductManufacturerDto> info() {
         return productService.findAllInfo();
+    }
+
+    @PutMapping("/{productId}/toOrder")
+    public ResponseEntity<?> handleAddToOrder(@PathVariable("productId") Long id, @Validated @RequestBody ProductDto productDto) {
+        productDto.setId(id);
+        if (orderDto == null){
+            List<ProductDto> list = new ArrayList<>();
+            list.add(productDto);
+            orderDto = orderDtoApi.create(OrderDto.builder()
+                            .products(list)
+                            .build());
+        } else {
+            orderDto.getProducts().removeIf(product -> product.getId().equals(id));
+            orderDto.getProducts().add(productDto);
+            orderDtoApi.update(orderDto);
+        }
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setLocation(URI.create("/order/" + orderDto.getId()));
+        return new ResponseEntity<>(httpHeaders, HttpStatus.NO_CONTENT);
     }
 
 }
